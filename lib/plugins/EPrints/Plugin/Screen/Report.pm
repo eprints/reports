@@ -635,9 +635,10 @@ sub render_splash_page
 	#render possible search forms
 	foreach my $formid (keys %search_forms)
 	{
-		my $table = $repo->make_element( "table", class=>"ep_search_fields", id=>$formid, style=>"display: none" );
-	        $form->appendChild( $table );
-	        $table->appendChild( $search_forms{$formid} );
+                my $fields_tag = $search_forms{$formid}->findnodes('tr')->size > 0 ? "table" : "div";
+                my $fields_wrapper = $repo->make_element( $fields_tag, class=>"ep_search_fields", id=>$formid, style=>"display: none" );
+                $form->appendChild( $fields_wrapper );
+                $fields_wrapper->appendChild( $search_forms{$formid} )
 	}
 
 	$form->appendChild( $self->render_controls );
