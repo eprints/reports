@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<epm xmlns='http://eprints.org/ep2/data/2.0' id='http://git.dev.ac.uk/id/epm/reports'>
+<epm xmlns='http://eprints.org/ep2/data/2.0' id='https://epm.eprints-hosting.org/id/epm/reports'>
   <epmid>reports</epmid>
-  <uri>http://git.dev.ac.uk/id/epm/reports</uri>
+  <uri>https://epm.eprints-hosting.org/id/epm/reports</uri>
   <documents>
     <document>
       <files>
@@ -133,7 +133,7 @@ ICAgIHNob3dfemVyb19yZXN1bHRzID0+IDEsCn07Cgo=
         </file>
         <file>
           <filename>lang/en/phrases/reports.xml</filename>
-          <mime_type>application/xml</mime_type>
+          <mime_type>text/xml</mime_type>
           <hash>f344518160d45ccd1d1709a926d9e6d1</hash>
           <hash_type>MD5</hash_type>
           <filesize>2563</filesize>
@@ -2372,7 +2372,7 @@ aXNJbnRlZ2VyKG51bSkgewogIHJldHVybiAobnVtIF4gMCkgPT09IG51bTsKfQo=
         </file>
         <file>
           <filename>static/style/auto/reports.css</filename>
-          <mime_type>text/x-asm</mime_type>
+          <mime_type>text/plain</mime_type>
           <hash>04cbc93d0515c56f56929cd6a16f5a44</hash>
           <hash_type>MD5</hash_type>
           <filesize>2151</filesize>
@@ -2417,7 +2417,7 @@ dG1sX3JlcG9ydF9wcmludDpob3ZlcnsKCWNvbG9yOiB3aGl0ZTsJCn0K
 </data>
         </file>
       </files>
-      <mime_type>text/x-asm</mime_type>
+      <mime_type>text/plain</mime_type>
       <format>text</format>
       <main>static/style/auto/reports.css</main>
       <content>install</content>
@@ -2868,7 +2868,7 @@ mCeqVAAAAABJRU5ErkJggg==
       <content>coverimage</content>
     </document>
   </documents>
-  <version>3.1</version>
+  <version>3.2.1</version>
   <creators>
     <item>
       <name>
