@@ -85,9 +85,9 @@
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report.pm</filename>
           <mime_type>text/plain</mime_type>
-          <hash>e88058df69ea1db3f145b316f6d1ada2</hash>
+          <hash>3f19c242174320590c457b433eaf6639</hash>
           <hash_type>MD5</hash_type>
-          <filesize>43956</filesize>
+          <filesize>44116</filesize>
         </file>
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report/EPrint.pm</filename>
