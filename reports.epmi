@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<epm xmlns='http://eprints.org/ep2/data/2.0' id='https://epm.eprints-hosting.org/id/epm/reports'>
+<epm id='https://epm.eprints-hosting.org/id/epm/reports' xmlns='http://eprints.org/ep2/data/2.0'>
   <epmid>reports</epmid>
   <uri>https://epm.eprints-hosting.org/id/epm/reports</uri>
   <documents>
