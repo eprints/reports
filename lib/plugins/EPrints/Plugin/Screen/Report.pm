@@ -1522,7 +1522,6 @@ sub render_clearform
 			for( input of inputs )
 			{
 				field_type = input.type.toLowerCase();	
-				console.log(field_type);
 				switch (field_type)
 				{
 				case "text":
