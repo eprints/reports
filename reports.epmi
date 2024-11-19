@@ -85,9 +85,9 @@
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report.pm</filename>
           <mime_type>text/plain</mime_type>
-          <hash>3f19c242174320590c457b433eaf6639</hash>
+          <hash>f39fb0deae29a19b89b66997340c3894</hash>
           <hash_type>MD5</hash_type>
-          <filesize>44116</filesize>
+          <filesize>44087</filesize>
         </file>
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report/EPrint.pm</filename>
@@ -134,9 +134,9 @@
         <file>
           <filename>static/javascript/auto/reports.js</filename>
           <mime_type>text/plain</mime_type>
-          <hash>d02c8742a8d57f71e94e1c62635b94de</hash>
+          <hash>399f9957d04d330098e2280f062661d9</hash>
           <hash_type>MD5</hash_type>
-          <filesize>12701</filesize>
+          <filesize>12696</filesize>
         </file>
         <file>
           <filename>static/style/auto/reports.css</filename>
