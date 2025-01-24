@@ -29,9 +29,9 @@
         <file>
           <filename>lang/en/phrases/reports.xml</filename>
           <mime_type>text/xml</mime_type>
-          <hash>f344518160d45ccd1d1709a926d9e6d1</hash>
+          <hash>9c23d9b3d22356d0ff30793364082dbb</hash>
           <hash_type>MD5</hash_type>
-          <filesize>2563</filesize>
+          <filesize>2685</filesize>
         </file>
         <file>
           <filename>plugins/EPrints/Plugin/Export/Grid2.pm</filename>
@@ -85,7 +85,7 @@
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report.pm</filename>
           <mime_type>text/plain</mime_type>
-          <hash>f39fb0deae29a19b89b66997340c3894</hash>
+          <hash>645bd1e2a38d975945e731b597c26f9d</hash>
           <hash_type>MD5</hash_type>
           <filesize>44087</filesize>
         </file>
@@ -134,9 +134,9 @@
         <file>
           <filename>static/javascript/auto/reports.js</filename>
           <mime_type>text/plain</mime_type>
-          <hash>399f9957d04d330098e2280f062661d9</hash>
+          <hash>fb34e39d76dbc63ac1d052981fca063f</hash>
           <hash_type>MD5</hash_type>
-          <filesize>12696</filesize>
+          <filesize>12978</filesize>
         </file>
         <file>
           <filename>static/style/auto/reports.css</filename>
@@ -166,7 +166,7 @@
       <content>coverimage</content>
     </document>
   </documents>
-  <version>3.3</version>
+  <version>3.3.1</version>
   <creators>
     <item>
       <name>
@@ -188,6 +188,20 @@
         <given>Will</given>
       </name>
       <id>rwf1v07@soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Oakley</family>
+        <given>Ed</given>
+      </name>
+      <id>E.J.Oakley@soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Newman</family>
+        <given>David R</given>
+      </name>
+      <id>drn@ecs.soton.ac.uk</id>
     </item>
   </creators>
   <datestamp>2017-06-14 15:21:27</datestamp>
