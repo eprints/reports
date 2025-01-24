@@ -48,4 +48,7 @@
 <epp:phrase id="exportfields:user_report_core">Export Fields</epp:phrase>
 <epp:phrase id="user_report:sort:byname">Name</epp:phrase>
 
+<!-- Fix for typo-ed phrase name in pre-3.4.6 EPrints -->
+<epp:phrase id="Update/Views:group_separator"> | </epp:phrase>
+
 </epp:phrases>

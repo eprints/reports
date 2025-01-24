@@ -1008,7 +1008,7 @@ sub render_sort_options
 
 		if( !$first )
                 {
-                	$sort_links->appendChild( $repo->html_phrase( "Update/Views:group_seperator" ) );
+                	$sort_links->appendChild( $repo->html_phrase( "Update/Views:group_separator" ) );
                 }
 		
 		if( defined $self->{processor}->{sort} && $self->{processor}->{sort} eq $sort_value )
@@ -1070,7 +1070,7 @@ sub render_group_options
 
 		if( !$first )
                 {
-                	$group_links->appendChild( $repo->html_phrase( "Update/Views:group_seperator" ) );
+                	$group_links->appendChild( $repo->html_phrase( "Update/Views:group_separator" ) );
                 }
 		
 		if( defined $self->{processor}->{group} && $self->{processor}->{group} eq $group_field )
@@ -1089,7 +1089,7 @@ sub render_group_options
         }           
 	
 	#no grouping link at the end
-	$group_links->appendChild( $repo->html_phrase( "Update/Views:group_seperator" ) );
+	$group_links->appendChild( $repo->html_phrase( "Update/Views:group_separator" ) );
 	if( defined $self->{processor}->{group} && $self->{processor}->{group} ne "" )
 	{
 		my $link = $repo->render_link( 'javascript:group_report("")' );	
@@ -1135,7 +1135,7 @@ sub render_refine_search
 		$search_links->appendChild( $new_link );
 
 		#add a separator...
-		$search_links->appendChild( $repo->html_phrase( "Update/Views:group_seperator" ) );
+		$search_links->appendChild( $repo->html_phrase( "Update/Views:group_separator" ) );
 
 		#set up refine search link
 		my $refine_baseurl = URI->new( $self->{session}->get_uri );
