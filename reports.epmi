@@ -85,9 +85,9 @@
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report.pm</filename>
           <mime_type>text/plain</mime_type>
-          <hash>645bd1e2a38d975945e731b597c26f9d</hash>
+          <hash>8bbbeeeb1dc8030c24e7814866e90e62</hash>
           <hash_type>MD5</hash_type>
-          <filesize>44087</filesize>
+          <filesize>44075</filesize>
         </file>
         <file>
           <filename>plugins/EPrints/Plugin/Screen/Report/EPrint.pm</filename>
@@ -134,9 +134,9 @@
         <file>
           <filename>static/javascript/auto/reports.js</filename>
           <mime_type>text/plain</mime_type>
-          <hash>fb34e39d76dbc63ac1d052981fca063f</hash>
+          <hash>46e3bc42410200895fcfe29085a1246e</hash>
           <hash_type>MD5</hash_type>
-          <filesize>12978</filesize>
+          <filesize>12510</filesize>
         </file>
         <file>
           <filename>static/style/auto/reports.css</filename>
@@ -166,7 +166,7 @@
       <content>coverimage</content>
     </document>
   </documents>
-  <version>3.3.1</version>
+  <version>3.3.2</version>
   <creators>
     <item>
       <name>
@@ -202,6 +202,13 @@
         <given>David R</given>
       </name>
       <id>drn@ecs.soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Rose</family>
+        <given>William</given>
+      </name>
+      <id>wr2f25@soton.ac.uk</id>
     </item>
   </creators>
   <datestamp>2017-06-14 15:21:27</datestamp>
