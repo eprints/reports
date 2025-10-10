@@ -811,7 +811,6 @@ sub render
 document.observe("dom:loaded", function() {
 	new EPrints_Screen_Report_Loader( {
 		ids: $json,
-		step: 20,
 		prefix: '$prefix',
 		url: '$url',
 		parameters: '$parameters',		
