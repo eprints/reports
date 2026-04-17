@@ -41,9 +41,9 @@
           <datasetid>document</datasetid>
           <filename>plugins/EPrints/Plugin/Export/Grid2.pm</filename>
           <mime_type>text/plain</mime_type>
-          <hash>83bb520ae07653dfb9292460794a23fa</hash>
+          <hash>ce4f81455c6bb8b5c0977a5e18836984</hash>
           <hash_type>MD5</hash_type>
-          <filesize>13575</filesize>
+          <filesize>13974</filesize>
         </file>
         <file>
           <datasetid>document</datasetid>
