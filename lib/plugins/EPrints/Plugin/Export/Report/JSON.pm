@@ -179,7 +179,6 @@ sub _epdata_to_json
 			{
 				my $field = $self->{dataset}->get_field( $fieldname );
 	                        next if !$field->get_property( "export_as_xml" );
-        	                next if defined $field->{sub_name};
 				my $value = $field->get_value( $epdata );
 				if( defined $repo->config( $self->{report}->{export_conf}, "custom_export" ) &&
 					exists $repo->config( $self->{report}->{export_conf}, "custom_export" )->{$field->get_name} )
