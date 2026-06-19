@@ -4,6 +4,8 @@
 
 <epp:phrase id="lib/report:loading">Loading report...</epp:phrase>
 
+<epp:phrase id="Update/Views:group_separator"> | </epp:phrase>
+
 <epp:phrase id="Plugin/Screen/Report:title">Reports</epp:phrase>
 <epp:phrase id="Plugin/Screen/Report:no_reports">No available reports</epp:phrase>
 
@@ -18,6 +20,9 @@
 <epp:phrase id="report_select">Select/Deselect All</epp:phrase>
 
 <epp:phrase id="Report:search_links"><div class="ep_view_group_by"><epc:pin name="links" /></div></epp:phrase>
+
+<epp:phrase id="report_select_label">Select Report:</epp:phrase>
+<epp:phrase id="export_select_label">Select Export Format:</epp:phrase>
 
 <!-- the Example reports -->
 <epp:phrase id="Plugin/Screen/Report/Example:title">Example</epp:phrase>

@@ -113,7 +113,13 @@ sub _create_search
   	return if ! defined $report_plugin->{searchdatasetid};
 	$self->{processor}->{report_plugin} = $report_plugin;
 
-        my $report_ds = $session->dataset( $report_plugin->{searchdatasetid} );
+        my $searchdatasetid = $report_plugin->{searchdatasetid};
+        if( defined $report_plugin->param("searchdatasetid") )
+        {
+            $searchdatasetid = $report_plugin->param("searchdatasetid");
+        }
+
+        my $report_ds = $session->dataset( $searchdatasetid );
         if( defined $report_ds )
         {
                 $self->{processor}->{datasetid} = $report_ds->base_id;
@@ -574,8 +580,8 @@ sub render_splash_page
 	$form->appendChild( $self->render_controls( 1 ) );
 
 	#add each report to the select component and generate search form if required
-	my $report_select = $repo->make_element( "select", name=>"report", id=>"select_report" );
-	my %search_forms;
+	my $report_select = $repo->make_element( "select", name=>"report", id=>"select_report", 'aria-labelledby' => "report_select_label" );
+	my @search_forms;
 	my $custom_reports = 0;
 	#foreach my $report_plugin ( @plugins )
 	foreach my $report_plugin ( sort { $a->get_subtype cmp $b->get_subtype } @plugins )
@@ -600,9 +606,17 @@ sub render_splash_page
   			$option->appendChild( $report_plugin->render_title );
 			$report_select->appendChild( $option );
 
+            # now we've added to the select, do we need to render a search form
+            next if (grep { $formid eq $_ } @search_forms );     
+
 			#create search form			
 			#get report dataset and appropriate search config
-			my $report_ds = $repo->dataset( $report_plugin->{searchdatasetid} );
+            my $searchdatasetid = $report_plugin->{searchdatasetid};
+            if( defined $report_plugin->param("searchdatasetid") )
+            {
+                $searchdatasetid = $report_plugin->param("searchdatasetid");
+            }    
+			my $report_ds = $repo->dataset( $searchdatasetid );
 			my $sconf = $report_ds->search_config( $report_plugin->{sconf} ) ;
 			#my $search = EPrints::Search->new(
 		        #        keep_cache => 1,
@@ -626,23 +640,30 @@ sub render_splash_page
 
 			#generate the form
 			my $frag = $self->render_search_fields( $searchexp, $formid );
-			$search_forms{$formid} = $frag unless exists $search_forms{$formid};
+
+            my $template = $repo->make_element( "template", id => $formid );
+            my $table = $repo->make_element( "div", class=>"ep_table ep_search_fields", id=>"form_$formid" );
+            $table->appendChild( $frag );
+            $template->appendChild( $table );
+            $custom->appendChild( $template );
+
+            # keep a record of this search form to save us from rendering it again
+            push @search_forms, $formid;
 		}	
 	}
+
+    # label for form select drop down
+    my $report_label = $repo->make_element( "label", id=>"report_select_label" );
+    $report_label->appendChild( $repo->html_phrase( "report_select_label" ) );
+    $form->appendChild( $report_label );
 	$form->appendChild( $report_select );
-	$form->appendChild( $repo->render_hidden_field( "screen", $self->{screenid} ) );
-
-	#render possible search forms
-	foreach my $formid (keys %search_forms)
-	{
-                my $fields_tag = $search_forms{$formid}->findnodes('tr')->size > 0 ? "table" : "div";
-                my $fields_wrapper = $repo->make_element( $fields_tag, class=>"ep_search_fields", id=>$formid, style=>"display: none" );
-                $form->appendChild( $fields_wrapper );
-                $fields_wrapper->appendChild( $search_forms{$formid} )
-	}
-
-	$form->appendChild( $self->render_controls );
-	$custom->appendChild( $form );
+	
+    $form->appendChild( $repo->render_hidden_field( "screen", $self->{screenid} ) );
+    $form->appendChild( $repo->make_element( "div", id=>"form_container" ) );
+	
+    $form->appendChild( $self->render_controls );
+	
+    $custom->appendChild( $form );
 
 	#javascript for changing forms based on report selection
 	$custom->appendChild( $repo->make_javascript( 'initReportForm();' ) );
@@ -678,44 +699,62 @@ sub render_splash_page
 
 sub render_search_fields
 {
-        my( $self, $search, $formid ) = @_;
+    my( $self, $search, $formid ) = @_;
 
 	my $exp = $self->{session}->param( "exp" );
 	my $sconf = $self->{session}->param( "sconf" );
-        if( defined $exp && defined $sconf && $sconf eq $formid )
+    if( defined $exp && defined $sconf && $sconf eq $formid )
 	{
-                $search->from_string( $exp );
+        $search->from_string( $exp );
   	}
 
-        my $frag = $self->{session}->make_doc_fragment;
-        foreach my $sf ( $search->get_non_filter_searchfields )
+    my $frag = $self->{session}->make_doc_fragment;
+    foreach my $sf ( $search->get_non_filter_searchfields )
+    {
+        my $label;
+        my $field;
+        if ( $sf->{"field"}->get_type() eq "namedset" )
         {
-	         $frag->appendChild(
-                        $self->{session}->render_row_with_help(
-                                help_prefix => $sf->get_form_prefix."_help",
-                                help => $sf->render_help,
-                                label => $sf->render_name,
-                                field => $sf->render,
-                                no_toggle => ( $sf->{show_help} eq "always" ),
-                                no_help => ( $sf->{show_help} eq "never" ),
-        	) );
+            # we want a legend and a label
+            $label = $self->{session}->make_element( "span", id=>$sf->get_form_prefix."_label" );
+            $label->appendChild( $sf->render_name );
+
+            my $legend = EPrints::Utils::tree_to_utf8( $sf->render_name );
+            $field = $sf->render( legend => $legend );
+        }
+        else {
+            $label = $self->{session}->make_element( "span", id=>$sf->get_form_prefix."_label" );
+            $label->appendChild( $sf->render_name );
+            $field = $sf->render();
         }
 
-        return $frag;
+	    $frag->appendChild(
+            $self->{session}->render_row_with_help(
+                help_prefix => $sf->get_form_prefix."_help",
+                help => $sf->render_help,
+                label => $label,
+                field => $field,
+                no_toggle => ( $sf->{show_help} eq "always" ),
+                no_help => ( $sf->{show_help} eq "never" ),
+        ) );
+    }
+
+    return $frag;
 }
 
 sub render_controls
 {
 	my( $self, $with_js ) = @_;
 
-	my $div = $self->{session}->make_element(
-                "div" ,
-                class => "ep_search_buttons" );
-        $div->appendChild( $self->{session}->render_action_buttons(
-                _order => [ "search" ],
-                #newsearch => $self->{session}->phrase( "lib/searchexpression:action_reset" ),
-                search => $self->{session}->phrase( "lib/searchexpression:action_search" ) )
-        );
+    my $div = $self->{session}->make_element(
+        "div" ,
+        class => "ep_search_buttons" );
+        
+    $div->appendChild( $self->{session}->render_action_buttons(
+        _order => [ "search" ],
+        #newsearch => $self->{session}->phrase( "lib/searchexpression:action_reset" ),
+        search => $self->{session}->phrase( "lib/searchexpression:action_search" ) )
+    );
 	
 	my $xml = $self->{session}->xml;
 
@@ -724,12 +763,12 @@ sub render_controls
 		my $clear_form = $div->appendChild( $self->render_clearform( $xml ) );
 	}
 
-        my $clear_btn = $div->appendChild( $xml->create_element( "button",
-        	type => "button",
-                onclick => "clearForm();",
-                class => "ep_form_action_button clear_button",
-                ) );
-        $clear_btn->appendChild( $xml->create_text_node( $self->{session}->html_phrase( "lib/searchexpression:action_reset" ) ) );
+    my $clear_btn = $div->appendChild( $xml->create_element( "button",
+        type => "button",
+        onclick => "clearForm();",
+        class => "ep_form_action_button clear_button",
+    ) );
+    $clear_btn->appendChild( $xml->create_text_node( $self->{session}->phrase( "lib/searchexpression:action_reset" ) ) );
 	return $div;
 }
 
@@ -863,6 +902,10 @@ sub render_export_bar
 		$form->appendChild( $repo->render_hidden_field( "group",  $self->{processor}->{group_exp} ) );
 	}	
 
+    my $export_label = $repo->make_element( "label", id=>"export_select_label" );
+    $export_label->appendChild( $repo->html_phrase( "export_select_label" ) );
+    $form->appendChild( $export_label );
+
 	if( !defined( $repo->config( $self->{export_conf}, "exportfields" ) ) )
 	{
 		#no custom export fields defined, use export plugins designed for this report
@@ -870,6 +913,7 @@ sub render_export_bar
 			name => 'export',
 			values => [map { $_->get_subtype } @plugins],
 			labels => {map { $_->get_subtype => $_->get_name } @plugins},
+            'aria-labelledby' => "export_select_label",
 		) );
 	}
 	else
@@ -880,6 +924,7 @@ sub render_export_bar
 			name => 'export',
 			values => [map { $_->get_subtype } @plugins],
 			labels => {map { $_->get_subtype => $_->get_name } @plugins},
+            'aria-labelledby' => "export_select_label",
 		) );
 
 		#create labels and panels for tabbed interfaced
@@ -892,7 +937,7 @@ sub render_export_bar
 	                    onclick => "toggleCheckboxes();",
 	                    class => "ep_form_action_button select_button",
 		) );
-	    	$select_btn->appendChild( $xml->create_text_node( $repo->html_phrase( "report_select" ) ) );
+	    $select_btn->appendChild( $xml->create_text_node( $repo->phrase( "report_select" ) ) );
 
 		#allow user to choose which fields they want to export
 		my $export_options = $repo->make_element( "div" );
@@ -932,7 +977,7 @@ sub render_export_bar
 			if( $count ) #only add options if we have any fields to show
 			{
 				my $div = $repo->make_element( "div", class=>"report_export_options" );
-				$div->appendChild( my $h = $repo->make_element( "h4" ) );
+				$div->appendChild( my $h = $repo->make_element( "div", class=>"custom_export_header" ) );
 				$h->appendChild( $repo->html_phrase( "exportfields:$key" ) );	
 				$div->appendChild( $ul );
 				$export_options->appendChild( $div );
@@ -959,7 +1004,7 @@ sub render_export_bar
         $options{show_icon_url} = "$imagesurl/multi_down.png";
 	$options{hide_icon_url} = "$imagesurl/multi_up.png";
 
-	my $box = $repo->make_element( "div", style=>"text-align: left" );
+	my $box = $repo->make_element( "div", style=>"text-align: left", class=>$self->{report} );
 	$box->appendChild( EPrints::Box::render( %options ) );
 	$chunk->appendChild( $box );
 
@@ -1171,10 +1216,15 @@ sub _export_field_checkbox
 	{
 		if( ( grep { $fieldname eq $_ } @{$repo->config( $self->{export_conf}, "exportfield_defaults" )} ) || ( scalar( @{$repo->config( $self->{export_conf}, "exportfield_defaults" )} ) == 0 ) )
 		{
-			#only check defaults or check everything if defaults not defined
+			# check defaults as specified
 			$checkbox->setAttribute( "checked", "yes" );
 		}
 	}
+    else # defaults not defined
+    {
+        $checkbox->setAttribute( "checked", "yes" );
+    }
+
 	my $label = $repo->make_element( "label", for => $fieldname );
 	$label->appendChild( $fieldlabel );
 
