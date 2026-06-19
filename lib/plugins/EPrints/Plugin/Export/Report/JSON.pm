@@ -187,13 +187,17 @@ sub _epdata_to_json
                         {
 				            my $field = $self->{dataset}->get_field( $fieldname );
 	                        next if !$field->get_property( "export_as_xml" );
-        	                next if defined $field->{sub_name};
-				            my $value = $field->get_value( $epdata );
-				        	if( defined $field->{virtual} )
-				            {
-					            $value = EPrints::Utils::tree_to_utf8( $epdata->render_value( $field->get_name ) );
-				            }
-		                    next if !EPrints::Utils::is_set( $value );
+				my $value = $field->get_value( $epdata );
+				if( defined $repo->config( $self->{report}->{export_conf}, "custom_export" ) &&
+					exists $repo->config( $self->{report}->{export_conf}, "custom_export" )->{$field->get_name} )
+        	                {
+					$value = $repo->config( $self->{report}->{export_conf}, "custom_export" )->{$field->get_name}->( $epdata, $self->{report} );
+				}
+				if( defined $field->{virtual} )
+				{
+					$value = EPrints::Utils::tree_to_utf8( $epdata->render_value( $field->get_name ) );
+				}
+		                next if !EPrints::Utils::is_set( $value );
         	                $subdata->{$field->get_name} = $value;
                         }
 			        }

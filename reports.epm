@@ -2611,7 +2611,7 @@ cnsKCWNvbG9yOiB3aGl0ZTsJCn0K
 </data>
         </file>
       </files>
-      <mime_type>text/x-asm</mime_type>
+      <mime_type>text/plain</mime_type>
       <format>text</format>
       <main>static/style/auto/reports.css</main>
       <content>install</content>
@@ -3085,6 +3085,27 @@ mCeqVAAAAABJRU5ErkJggg==
         <given>Will</given>
       </name>
       <id>rwf1v07@soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Oakley</family>
+        <given>Ed</given>
+      </name>
+      <id>E.J.Oakley@soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Newman</family>
+        <given>David R</given>
+      </name>
+      <id>drn@ecs.soton.ac.uk</id>
+    </item>
+    <item>
+      <name>
+        <family>Rose</family>
+        <given>William</given>
+      </name>
+      <id>wr2f25@soton.ac.uk</id>
     </item>
   </creators>
   <datestamp>2017-06-14 15:21:27</datestamp>
